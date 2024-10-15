@@ -2,17 +2,12 @@ import os
 from mailjet_rest import Client
 import base64
 from jinja2 import Template
-
-api_key = '7f718a70d3e88863299567875e4d726e'
-api_secret = 'c5ddded6d49eabb7932bb76bd0976fee'
+from config import api_key,api_secret,event_date,event_location,event_time,sender,sendername
 
 mailjet = Client(auth=(api_key, api_secret), version='v3.1')
 
 def send_email(recipient, subject, text_content, attendee_name, attendee_email, user_id, ticket_type, qr_code_url, attachment_path=None):
-    sender = "test@mohamedrizad.me"
-    event_date = "2024-05-01"
-    event_time = "10:00 AM"
-    event_location = "Virtual Event"
+    
     html_template = """
     <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +28,7 @@ def send_email(recipient, subject, text_content, attendee_name, attendee_email, 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Attendee Information -->
         <div class="space-y-4">
-          <h2 class="text-2xl font-semibold text-gray-700">Attendee Information</h2>
+          <h2 class="text-sendername2xl font-semibold text-gray-700">Attendee Information</h2>
           <div class="space-y-2">
             <div class="flex items-center space-x-2">
               <svg class="w-5 h-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -113,7 +108,7 @@ def send_email(recipient, subject, text_content, attendee_name, attendee_email, 
             {
                 "From": {
                     "Email": sender,
-                    "Name": "International Designer League"
+                    "Name": sendername
                 },
                 "To": [
                     {
